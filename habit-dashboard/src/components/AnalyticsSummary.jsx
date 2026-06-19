@@ -48,10 +48,18 @@ function AnalyticsSummary() {
       b.percentage - a.percentage
   )[0];
 
-  const worstHabit = [...habits].sort(
-    (a, b) =>
-      a.percentage - b.percentage
-  )[0];
+  const habitsNeedingAttention =
+  habits.filter(
+    (habit) => habit.percentage < 100
+  );
+
+const worstHabit =
+  habitsNeedingAttention.length > 0
+    ? [...habitsNeedingAttention].sort(
+        (a, b) =>
+          a.percentage - b.percentage
+      )[0]
+    : null;
 
   const overallRate = Math.round(
     habits.reduce(
@@ -83,19 +91,33 @@ function AnalyticsSummary() {
         </p>
       </div>
 
-      <div className="bg-[#1c1c1c] border border-slate-700 rounded-xl p-5">
-        <p className="text-gray-400">
-          ⚠️ Attention
-        </p>
+     <div className="bg-[#1c1c1c] border border-slate-700 rounded-xl p-5">
+  <p className="text-gray-400">
+    ⚠️ Attention
+  </p>
 
-        <h3 className="text-lg font-bold mt-2">
-          {worstHabit?.name}
-        </h3>
+  {worstHabit ? (
+    <>
+      <h3 className="text-lg font-bold mt-2">
+        {worstHabit.name}
+      </h3>
 
-        <p className="text-red-400">
-          {worstHabit?.percentage}%
-        </p>
-      </div>
+      <p className="text-red-400">
+        {worstHabit.percentage}%
+      </p>
+    </>
+  ) : (
+    <>
+      <h3 className="text-lg font-bold mt-2 text-emerald-400">
+        None 🎉
+      </h3>
+
+      <p className="text-gray-400 text-sm">
+        All habits completed
+      </p>
+    </>
+  )}
+</div>
 
       <div className="bg-[#1c1c1c] border border-slate-700 rounded-xl p-5">
         <p className="text-gray-400">
