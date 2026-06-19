@@ -37,6 +37,25 @@ function HabitProgress() {
         100
     ),
   }));
+  if (habits.length === 0) {
+  return (
+    <div className="mt-12">
+      <h2 className="text-2xl font-bold mb-6">
+        Habit Performance
+      </h2>
+
+      <div className="bg-[#1c1c1c] border border-slate-700 rounded-2xl p-8 text-center">
+        <p className="text-gray-400">
+          No habit data available yet.
+        </p>
+
+        <p className="text-sm text-gray-500 mt-2">
+          Complete some habits and check back tomorrow.
+        </p>
+      </div>
+    </div>
+  );
+}
 
   const bestHabit = habits.reduce(
     (best, current) =>
