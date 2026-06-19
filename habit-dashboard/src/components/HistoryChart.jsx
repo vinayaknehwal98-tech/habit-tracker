@@ -41,7 +41,7 @@ function HistoryChart({ history }) {
 
   return (
     <div className="mt-12">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
         <h2 className="text-3xl font-bold">
           📈 Last 7 Days
         </h2>
@@ -69,8 +69,8 @@ function HistoryChart({ history }) {
         </div>
       </div>
 
-      <div className="bg-[#1c1c1c] border border-slate-700 rounded-3xl p-8">
-        <div className="flex items-end justify-between h-80">
+      <div className="bg-[#1c1c1c] border border-slate-700 rounded-3xl p-4 md:p-8 overflow-x-auto">
+        <div className="flex items-end justify-between h-80 min-w-[500px]">
           {last7Days.map((day, index) => (
             <div
               key={index}
@@ -84,16 +84,16 @@ function HistoryChart({ history }) {
 
               {day.percentage > 0 ? (
                 <div
-                  className="
-                    w-14
-                    rounded-t-2xl
-                    bg-gradient-to-t
-                    from-emerald-600
-                    to-emerald-300
-                    transition-all
-                    duration-300
-                    hover:scale-105
-                  "
+                className="
+  w-8 md:w-14
+  rounded-t-2xl
+  bg-gradient-to-t
+  from-emerald-600
+  to-emerald-300
+  transition-all
+  duration-300
+  hover:scale-105
+"
                   style={{
                     height: `${Math.max(
                       day.percentage * 3,
@@ -102,10 +102,11 @@ function HistoryChart({ history }) {
                   }}
                 />
               ) : (
-                <div className="w-14 h-1 bg-slate-700 rounded-full" />
+                
+                <div className="w-8 md:w-14 h-1 bg-slate-700 rounded-full" />
               )}
 
-              <span className="mt-3 text-gray-400 font-medium">
+              <span className="mt-3 text-xs md:text-base text-gray-400 font-medium">
                 {day.day}
               </span>
             </div>
