@@ -3,47 +3,47 @@ import { getWeeklyHistory } from "../history";
 function WeeklyView() {
   const history = getWeeklyHistory();
 
-  const today = new Date();
   const week = [];
 
-  for (let i = 6; i >= 0; i--) {
-    const date = new Date();
-    date.setDate(today.getDate() - i);
+const recentHistory = history.slice(-7);
 
-    const dateString = date
-      .toISOString()
-      .split("T")[0];
+recentHistory.forEach((dayData) => {
+  const date = new Date(dayData.date);
 
-    const savedDay = history.find(
-      (item) => item.date === dateString
-    );
+  week.push({
+    day: date
+      .toLocaleDateString("en-US", {
+        weekday: "short",
+      })
+      .toUpperCase(),
 
-    week.push({
-      day: date
-        .toLocaleDateString("en-US", {
-          weekday: "short",
-        })
-        .toUpperCase(),
+    date: date.getDate(),
 
-      date: date.getDate(),
+    progress: dayData.percentage || 0,
 
-      progress: savedDay
-        ? savedDay.percentage
-        : 0,
+    completed: dayData.completed || 0,
 
-      completed: savedDay
-        ? savedDay.completed || 0
-        : 0,
+    total: dayData.total || 0,
 
-      total: savedDay
-        ? savedDay.total || 0
-        : 0,
+    active:
+      dayData.date ===
+      new Date()
+        .toISOString()
+        .split("T")[0],
+  });
+});
 
-      active:
-        date.toDateString() ===
-        today.toDateString(),
-    });
-  }
+while (week.length < 7) {
+  week.push({
+    day: "---",
+    date: "",
+    progress: 0,
+    completed: 0,
+    total: 0,
+    active: false,
+    empty: true,
+  });
+}
 
   const weeklyAverage = Math.round(
     week.reduce(
@@ -135,12 +135,12 @@ function WeeklyView() {
             >
               <div className="text-center">
                 <p className="text-gray-400 font-semibold">
-                  {item.day}
-                </p>
+  {item.day}
+</p>
 
                 <p className="text-4xl font-bold">
-                  {item.date}
-                </p>
+  {item.date || "-"}
+</p>
 
                 {item.active && (
                   <p className="text-xs text-emerald-400">

@@ -55,8 +55,10 @@ function HabitCard({
     )
       return "💧";
 
-    return "✨";
+    return "";
   };
+
+  const icon = getHabitIcon(habit.name);
 
   return (
     <div
@@ -65,25 +67,25 @@ function HabitCard({
         border: `1px solid ${borderColor}`,
       }}
       className={`
-  max-w-5xl
-  mx-auto
-  mb-4
-  px-6
-  py-5
-  rounded-3xl
-  flex
-  items-center
-  justify-between
-  hover:scale-[1.02]
-  hover:shadow-xl
-  transition-all
-  duration-300
-  ${
-    habit.completed
-      ? "ring-2 ring-green-500"
-      : ""
-  }
-`}
+        max-w-5xl
+        mx-auto
+        mb-4
+        px-6
+        py-5
+        rounded-3xl
+        flex
+        items-center
+        justify-between
+        hover:scale-[1.02]
+        hover:shadow-xl
+        transition-all
+        duration-300
+        ${
+          habit.completed
+            ? "ring-2 ring-green-500"
+            : ""
+        }
+      `}
     >
       <div className="flex items-center gap-4">
         <input
@@ -101,13 +103,13 @@ function HabitCard({
         />
 
         <span
-         className={`text-2xl font-semibold transition-all ${
-  habit.completed
-    ? "line-through text-green-400"
-    : ""
-}`}
+          className={`text-2xl font-semibold transition-all ${
+            habit.completed
+              ? "line-through text-green-400"
+              : ""
+          }`}
         >
-          {getHabitIcon(habit.name)}{" "}
+          {icon && `${icon} `}
           {habit.name}
         </span>
       </div>

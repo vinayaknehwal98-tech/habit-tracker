@@ -1,30 +1,31 @@
 function HistoryChart({ history }) {
   const last7Days = [];
 
-  for (let i = 6; i >= 0; i--) {
-    const date = new Date();
-    date.setDate(date.getDate() - i);
+const recentHistory = history.slice(-7);
 
-    const dateString = date
-      .toISOString()
-      .split("T")[0];
+recentHistory.forEach((dayData) => {
+  const date = new Date(dayData.date);
 
-    const savedDay = history.find(
-      (item) => item.date === dateString
-    );
+  last7Days.push({
+    day: date
+      .toLocaleDateString("en-US", {
+        weekday: "short",
+      })
+      .toUpperCase(),
 
-    last7Days.push({
-      day: date
-        .toLocaleDateString("en-US", {
-          weekday: "short",
-        })
-        .toUpperCase(),
+    percentage: dayData.percentage || 0,
 
-      percentage: savedDay
-        ? savedDay.percentage
-        : 0,
-    });
-  }
+    empty: false,
+  });
+});
+
+while (last7Days.length < 7) {
+  last7Days.push({
+    day: "---",
+    percentage: 0,
+    empty: true,
+  });
+}
 
   const average = Math.round(
     last7Days.reduce(
@@ -77,9 +78,9 @@ function HistoryChart({ history }) {
               className="flex flex-col items-center justify-end h-full flex-1"
             >
               <span className="text-xs text-emerald-400 mb-2 font-semibold">
-                {day.percentage > 0
-                  ? `${day.percentage}%`
-                  : ""}
+                {!day.empty && day.percentage > 0
+  ? `${day.percentage}%`
+  : ""}
               </span>
 
               {day.percentage > 0 ? (
@@ -107,7 +108,7 @@ function HistoryChart({ history }) {
               )}
 
               <span className="mt-3 text-xs md:text-base text-gray-400 font-medium">
-                {day.day}
+                {day.empty ? "---" : day.day}
               </span>
             </div>
           ))}

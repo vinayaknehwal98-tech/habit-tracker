@@ -21,47 +21,13 @@ function App() {
   const [activeTab, setActiveTab] =
     useState("Today");
 
-  const [darkMode, setDarkMode] =
-    useState(true);
-
   const [habits, setHabits] = useState(() => {
     const saved =
       localStorage.getItem("habits");
 
-    return saved
-      ? JSON.parse(saved)
-      : [
-          {
-            id: 1,
-            name: "Gym",
-            completed: false,
-          },
-          {
-            id: 2,
-            name: "DSA",
-            completed: false,
-          },
-          {
-            id: 3,
-            name: "AI/ML",
-            completed: false,
-          },
-          {
-            id: 4,
-            name: "Project Work",
-            completed: false,
-          },
-          {
-            id: 5,
-            name: "Content Creation",
-            completed: false,
-          },
-          {
-            id: 6,
-            name: "Reading",
-            completed: false,
-          },
-        ];
+   return saved
+  ? JSON.parse(saved)
+  : [];
   });
 
   useEffect(() => {
@@ -215,22 +181,13 @@ useEffect(() => {
     );
   };
 
-  const bgColor = darkMode
-    ? "#111111"
-    : "#f8fafc";
+  const bgColor = "#111111";
 
-  const textColor = darkMode
-    ? "#ffffff"
-    : "#0f172a";
+const textColor = "#ffffff";
 
-  const cardColor = darkMode
-    ? "#1c1c1c"
-    : "#ffffff";
+const cardColor = "#1c1c1c";
 
-  const borderColor = darkMode
-    ? "#333333"
-    : "#cbd5e1";
-
+const borderColor = "#333333";
   return (
     <div
       style={{
@@ -241,26 +198,8 @@ useEffect(() => {
       className="px-6 py-10"
     >
       <div className="max-w-5xl mx-auto">
-        <div className="relative">
-          <div className="absolute right-0 top-0">
-            <button
-              onClick={() =>
-                setDarkMode(!darkMode)
-              }
-              className="
-                px-4
-                py-2
-                rounded-xl
-                border
-                border-slate-600
-                hover:bg-slate-800
-                transition
-              "
-            >
-              {darkMode ? "☀️" : "🌙"}
-            </button>
-          </div>
-
+        <div>
+          
           <Header
             activeTab={activeTab}
             setActiveTab={
@@ -368,24 +307,31 @@ useEffect(() => {
               </div>
             </div>
 
-            <div className="mt-8">
-              {habits.map((habit) => (
-                <HabitCard
-                  key={habit.id}
-                  habit={habit}
-                  toggleHabit={
-                    toggleHabit
-                  }
-                  deleteHabit={
-                    deleteHabit
-                  }
-                  cardColor={cardColor}
-                  borderColor={
-                    borderColor
-                  }
-                />
-              ))}
-            </div>
+           <div className="mt-8">
+  {habits.length === 0 ? (
+    <div className="text-center py-16">
+      <h3 className="text-2xl font-bold text-gray-400">
+        No habits yet
+      </h3>
+
+      <p className="text-gray-500 mt-2">
+        Add your first habit above to get started.
+      </p>
+    </div>
+  ) : (
+    habits.map((habit) => (
+      
+      <HabitCard
+        key={habit.id}
+        habit={habit}
+        toggleHabit={toggleHabit}
+        deleteHabit={deleteHabit}
+        cardColor={cardColor}
+        borderColor={borderColor}
+      />
+    ))
+  )}
+</div>
        
 
 <DailyNotes />
