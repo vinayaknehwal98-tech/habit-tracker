@@ -210,25 +210,25 @@ function WeeklyView() {
       </div>
 
       {/* Weekly Trend */}
-      <div className="mt-10 bg-[#1c1c1c] border border-slate-700 rounded-3xl p-6">
+      <div className="mt-10 bg-[#1c1c1c] border border-slate-700 rounded-3xl p-4 md:p-6 overflow-x-auto">
         <h3 className="text-2xl font-bold mb-8">
           Weekly Trend
         </h3>
 
-        <div className="flex items-end justify-between h-72 px-4 border-b border-slate-700">
+        <div className="flex items-end justify-between h-72 px-2 md:px-4 border-b border-slate-700 min-w-[420px] md:min-w-full">
           {week.map((item, index) => (
             <div
               key={index}
               className="flex flex-col items-center justify-end h-full flex-1"
             >
-              <span className="text-sm text-emerald-400 mb-2 font-semibold">
+              <span className="text-xs md:text-sm text-emerald-400 mb-2 font-semibold">
                 {item.progress}%
               </span>
 
               {item.progress > 0 ? (
                 <div
                   className="
-                    w-12
+                    w-8 md:w-12
                     rounded-t-xl
                     bg-gradient-to-t
                     from-emerald-600
@@ -242,10 +242,10 @@ function WeeklyView() {
                   }}
                 />
               ) : (
-                <div className="w-12 h-1 bg-slate-700 rounded-full" />
+                <div className="w-8 md:w-12 h-1 bg-slate-700 rounded-full" />
               )}
 
-              <span className="mt-3 text-gray-400">
+              <span className="mt-3 text-xs md:text-sm text-gray-400">
                 {item.day}
               </span>
             </div>
