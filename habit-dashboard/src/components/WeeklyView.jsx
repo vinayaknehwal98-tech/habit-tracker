@@ -3,57 +3,76 @@ import { getWeeklyHistory } from "../history";
 function WeeklyView() {
   const history = getWeeklyHistory();
 
+  const today = new Date().toLocaleDateString(
+    "en-CA",
+    {
+      timeZone: "Asia/Kolkata",
+    }
+  );
+
   const week = [];
 
-const recentHistory = history.slice(-7);
+  const recentHistory = history.slice(-7);
 
-recentHistory.forEach((dayData) => {
-  const date = new Date(dayData.date);
+  recentHistory.forEach((dayData) => {
+    const [year, month, day] =
+      dayData.date.split("-");
 
-  week.push({
-    day: date
-      .toLocaleDateString("en-US", {
-        weekday: "short",
-      })
-      .toUpperCase(),
+    const date = new Date(
+      year,
+      month - 1,
+      day
+    );
 
-    date: date.getDate(),
+    week.push({
+      day: date
+        .toLocaleDateString("en-US", {
+          weekday: "short",
+        })
+        .toUpperCase(),
 
-    progress: dayData.percentage || 0,
+      date: date.getDate(),
 
-    completed: dayData.completed || 0,
+      progress:
+        dayData.percentage || 0,
 
-    total: dayData.total || 0,
+      completed:
+        dayData.completed || 0,
 
-    active:
-      dayData.date ===
-      new Date()
-        .toISOString()
-        .split("T")[0],
+      total:
+        dayData.total || 0,
+
+      active:
+        dayData.date === today,
+
+      empty: false,
+    });
   });
-});
 
-while (week.length < 7) {
-  week.push({
-    day: "---",
-    date: "",
-    progress: 0,
-    completed: 0,
-    total: 0,
-    active: false,
-    empty: true,
-  });
-}
+  while (week.length < 7) {
+    week.push({
+      day: "---",
+      date: "",
+      progress: 0,
+      completed: 0,
+      total: 0,
+      active: false,
+      empty: true,
+    });
+  }
 
   const weeklyAverage = Math.round(
     week.reduce(
-      (sum, day) => sum + day.progress,
+      (sum, day) =>
+        sum + day.progress,
       0
     ) / 7
   );
 
   const bestDay = Math.max(
-    ...week.map((day) => day.progress)
+    ...week.map(
+      (day) => day.progress
+    )
   );
 
   const trackedDays = week.filter(
@@ -138,7 +157,7 @@ while (week.length < 7) {
   {item.day}
 </p>
 
-                <p className="text-4xl font-bold">
+              <p className="text-4xl font-bold">
   {item.date || "-"}
 </p>
 
@@ -150,7 +169,8 @@ while (week.length < 7) {
               </div>
 
               <div className="relative flex items-center justify-center w-[100px] h-[100px]">
-                {item.progress > 0 ? (
+                {!item.empty &&
+item.progress > 0 ? (
                   <>
                     <svg
                       width="100"

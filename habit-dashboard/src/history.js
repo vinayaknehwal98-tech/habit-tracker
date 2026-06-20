@@ -3,10 +3,12 @@ export function saveDailyProgress(
   completed,
   total
 ) {
-  const today =
-    new Date()
-      .toISOString()
-      .split("T")[0];
+  const today = new Date().toLocaleDateString(
+  "en-CA",
+  {
+    timeZone: "Asia/Kolkata",
+  }
+);
 
   const history =
     JSON.parse(

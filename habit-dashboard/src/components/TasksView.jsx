@@ -28,9 +28,12 @@ function TasksView() {
       new Date().getDate() + i
     );
 
-    const key = date
-      .toISOString()
-      .split("T")[0];
+    const key = date.toLocaleDateString(
+  "en-CA",
+  {
+    timeZone: "Asia/Kolkata",
+  }
+);
 
     days.push({
       key,

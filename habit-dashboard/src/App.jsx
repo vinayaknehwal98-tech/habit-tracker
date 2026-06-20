@@ -31,9 +31,12 @@ function App() {
   });
 
   useEffect(() => {
-  const today = new Date()
-    .toISOString()
-    .split("T")[0];
+const today = new Date().toLocaleDateString(
+  "en-CA",
+  {
+    timeZone: "Asia/Kolkata",
+  }
+);
 
   const lastReset =
     localStorage.getItem(
